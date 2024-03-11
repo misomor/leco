@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% comment %} <div class="container">
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div> {% endcomment %}
+
+ <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <br>
+                <form method="post" class="needs-validation" novalidate autocomplete="off">
+                    {% csrf_token %}
+                    <div class="form-group align-center">
+                        <label for="id_name" class="">Stroj</label>
+                        {{ form.name }}
+                        <br>
+                        <div class="invalid-feedback">
+                            <p> Please provide a category name. </p>
+                        </div>
+                    </div>
+                    <br>
+                   {% comment %}  <div class="form-group">
+                        <label for="id_parent">Stroj</label>
+                        {{ form.parent }}
+                    </div> {% endcomment %}
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Validacija forme korišćenjem Bootstrap-ove 'needs-validation' klase -->
+<script>
+    (function() {
+        'use strict';
+
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+<script>
+    document.getElementById('id_parent').addEventListener('change', function() {
+        var parentCategory = this.options[this.selectedIndex].text;
+        var categoryNameLabel = document.querySelector('label[for="id_name"]');
+        if (parentCategory === "---------") {
+            categoryNameLabel.textContent  = parentCategory + " Stroj ";
+        } else {
+            categoryNameLabel.textContent = parentCategory + " Podkategori stoja";
+        }
+    });
+</script>
+
+{% endblock content %}

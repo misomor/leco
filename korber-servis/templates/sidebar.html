@@ -1,0 +1,39 @@
+{% load static %}
+
+<div class="sidebar pe-4 pb-3">
+    <nav class="navbar bg-secondary navbar-dark">
+        <a href="index.html" class="navbar-brand mx-4 mb-3">
+            <img class="d-flex align-items-center ms-4 mb-4" src="{% static 'img/favicon.png' %}"  width="117">
+        </a>
+        <div class="d-flex align-items-center ms-4 mb-4">
+          {% comment %}   <div class="position-relative">
+                <img class="rounded-circle" src="{% static 'img/user.jpg' %}" alt="" style="width: 40px; height: 40px;">
+                <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+            </div> {% endcomment %}
+            <div class="ms-3">
+                <h3 class="mb-0">Körber</h3>
+                <span></span>
+            </div>
+        </div>
+        <div class="navbar-nav w-100">
+            {% if user.is_authenticated %}  
+                {% for category in categories %}
+                        
+                    <a href="{% url 'category_documents' category.id %}" class="nav-item nav-link"><i class="fa i bi-tools me-2"></i>{{ category.name }}</a>
+                    {% if category.children.all %}
+                <ul> <!-- Dodajte podkategorije u ovoj listi -->
+                        {% for child_category in category.children.all %}
+                            <li>
+                                <a href="{% url 'category_documents' child_category.id %}" class="nav-item nav-link">
+                                    <i class="fa i bi-tools me-2"></i>{{ child_category.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                </ul>
+                    {% endif %}                
+                {% endfor %}
+            {% endif %}           
+        
+        </div>
+    </nav>
+</div>
